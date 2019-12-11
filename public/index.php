@@ -18,9 +18,9 @@ $app->add(function ($req, $res, $next) {
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
 
-$app->get('/matches/{personality}', function (Request $request, Response $response, $args) {
+$app->get('/matches/{personality}/{gender}', function (Request $request, Response $response, $args) {
     $matchingService = new MatchingService();
-    $matches = $matchingService->getMatchingUsers($args['personality']);
+    $matches = $matchingService->getMatchingUsers($args['personality'], $args['gender']);
     $body = $response->getBody();
     $body->write(json_encode($matches));
     $newResponse = $response->withHeader('Content-type', 'application/json');

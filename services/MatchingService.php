@@ -10,11 +10,13 @@ use GuzzleHttp\Client;
 class MatchingService
 {
     const MOCKDATALINK = "http://mockbcknd.tk/";
+
     /**
      * @param $personality
+     * @param $gender
      * @return array
      */
-    public function getMatchingUsers($personality)
+    public function getMatchingUsers($personality, $gender)
     {
         $guzzleClient = new Client([
             'base_uri' => self::MOCKDATALINK,
@@ -30,7 +32,8 @@ class MatchingService
         $matches = [];
         foreach ($users as $username => $user){
             $userPersonality = $user->personalityType;
-            if($scoresByPersonality->$userPersonality >= 3)
+            $userGender = $user->gender;
+            if($scoresByPersonality->$userPersonality >= 3 && $userGender === $gender)
             {
                 $matches[$username] = $user;
                 $matches[$username]->score = $scoresByPersonality->$userPersonality;
@@ -51,6 +54,16 @@ class MatchingService
        return $personalityTypes[rand(0,count($personalityTypes)-1)];
     }
 
+    /**
+     * @return mixed
+     */
+    private function getRandomGender()
+    {
+        $genders = ['m', 'f', 'o'];
+
+        return $genders[rand(0,2)];
+    }
+
     private function completeUsers($users)
     {
         $appUsers = [];
@@ -63,6 +76,7 @@ class MatchingService
             $appUsers[$key]->lat = $user->geometry->coordinates[1];
             $appUsers[$key]->long = $user->geometry->coordinates[0];
             $appUsers[$key]->personalityType = $this->getRandomPersonalityType();
+            $appUsers[$key]->gender = $this->getRandomGender();
         }
 
         return $appUsers;
