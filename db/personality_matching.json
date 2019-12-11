@@ -1,0 +1,15 @@
+{
+  "John": {
+    "status": "Wait"
+  },
+  "Jennifer": {
+    "status": "Active"
+  },
+  "James": {
+    "status": "Active",
+    "age": 56,
+    "count": 10,
+    "progress": 0.0029857,
+    "bad": 0
+  }
+}

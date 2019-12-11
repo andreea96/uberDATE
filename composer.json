@@ -1,0 +1,11 @@
+{
+    "require": {
+        "slim/slim": "3.*",
+        "guzzlehttp/psr7": "^1.6",
+        "http-interop/http-factory-guzzle": "^1.0",
+        "slim/psr7": "^0.6.0",
+        "nyholm/psr7": "^1.2",
+        "nyholm/psr7-server": "^0.4.1",
+        "guzzlehttp/guzzle": "^6.5"
+    }
+}
