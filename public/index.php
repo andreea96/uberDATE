@@ -19,16 +19,20 @@ $app->get('/matches/{personality}', function (Request $request, Response $respon
     return $response->getBody()->write(json_encode($matches));
 });
 
-$app->get('/poi/{currentUser}/{matchedUser}', function (Request $request, Response $response, $args){
+$app->get('/poi/{matchedUser}/{latCurrent}/{longCurrent}', function (Request $request, Response $response, $args){
     $poiService = new PoiService();
 
     $users = json_decode(file_get_contents("../db/nearby_users.json"));
 
-    $currentUser = $args['currentUser'];
+    $currentLat = $args['latCurrent'];
+    $currentLong = $args['longCurrent'];
     $matchedUser = $args['matchedUser'];
-    $dateLocation = $poiService->getDateLocation($users->$currentUser, $users->$matchedUser);
+    $dateLocation = $poiService->getDateLocation($users->$matchedUser, $currentLat, $currentLong);
 
     return $response->getBody()->write(json_encode($dateLocation));
 });
 
+$app->get('/test', function (Request $request, Response $response) {
+
+});
 $app->run();

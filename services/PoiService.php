@@ -14,27 +14,26 @@ class PoiService
 
     /**
      * @param $matchingUser
-     * @param $currentUser
+     * @param $longCurrent
+     * @param $latCurrent
      * @return \StdClass
      */
-    public function getDateLocation($matchingUser, $currentUser) {
+    public function getDateLocation($matchingUser, $latCurrent, $longCurrent) {
         $guzzleClient = new Client([
             'base_uri' => self::API_URL
         ]);
 
-        $latA = ($matchingUser->lat + $currentUser->lat)/2;
-        $longA = ($matchingUser->long + $currentUser->long)/2;
-
+        $latA = ($matchingUser->lat + $latCurrent)/2;
+        $longA = ($matchingUser->long + $longCurrent)/2;
         $options = [
             'query' => [
                 'key' => self::API_KEY,
                 'limit' => 1,
                 'lat' => $latA,
                 'lon' => $longA,
-                'radius' => 500,
+                'radius' => 3000,
             ]
         ];
-
         try{
             $response = $guzzleClient->request("GET", "search/2/poiSearch/".$this->getRandPlace().".json", $options);
         }catch (\Throwable $ex) {
@@ -42,7 +41,6 @@ class PoiService
         }
 
         $responseObject = json_decode($response->getBody()->getContents());
-
         $firstResult = $responseObject->results[0];
         $dateLocation = new \StdClass();
         $dateLocation->name = $firstResult->poi->name;
@@ -60,4 +58,6 @@ class PoiService
 
         return $validOptions[rand(0, count($validOptions)-1)];
     }
+
+
 }
