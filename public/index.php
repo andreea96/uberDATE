@@ -29,8 +29,10 @@ $app->get('/poi/{matchedUser}/{latCurrent}/{longCurrent}', function (Request $re
     $currentLong = $args['longCurrent'];
     $matchedUser = $args['matchedUser'];
     $dateLocation = $poiService->getDateLocation($users->$matchedUser, $currentLat, $currentLong);
+    $response->getBody()->write(json_encode($dateLocation));
+    $jsonResponse = $response->withHeader('Content-Type', 'application/json');
 
-    return $response->getBody()->write(json_encode($dateLocation));
+    return $jsonResponse;
 });
 
 $app->get('/test', function (Request $request, Response $response) {
