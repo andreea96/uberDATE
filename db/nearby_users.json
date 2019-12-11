@@ -1,0 +1,42 @@
+{
+ "vladx100" : {
+   "lat": 52.496191,
+   "long": 13.452598,
+   "personalityType": "ENTP"
+ },
+  "andreeaBoss" : {
+    "lat": 52.497289,
+    "long": 13.454969,
+    "personalityType": "ISTJ"
+  },
+  "User3": {
+    "lat": 52.495545,
+    "long": 13.453510,
+    "personalityType": "INFJ"
+  },
+  "User4": {
+    "lat": 52.496818,
+    "long": 13.449626,
+    "personalityType": "ESTJ"
+  },
+  "User5": {
+    "lat": 52.498765,
+    "long": 13.451139,
+    "personalityType": "INTJ"
+  },
+  "User6": {
+    "lat": 52.497602,
+    "long": 13.448296,
+    "personalityType": "ENFJ"
+  },
+  "User7": {
+    "lat": 52.497602,
+    "long": 13.448296,
+    "personalityType": "ESFJ"
+  },
+  "User8": {
+    "lat": 52.495806,
+    "long": 13.459024,
+    "personalityType": "ISTP"
+  }
+}
