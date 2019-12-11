@@ -10,13 +10,14 @@ include("../services/PoiService.php");
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = new \Slim\App();
-
 $app->get('/matches/{personality}', function (Request $request, Response $response, $args) {
-
     $matchingService = new MatchingService();
     $matches = $matchingService->getMatchingUsers($args['personality']);
+    $body = $response->getBody();
+    $body->write(json_encode($matches));
+    $newResponse = $response->withHeader('Content-type', 'application/json');
 
-    return $response->getBody()->write(json_encode($matches));
+    return  $newResponse;
 });
 
 $app->get('/poi/{matchedUser}/{latCurrent}/{longCurrent}', function (Request $request, Response $response, $args){
