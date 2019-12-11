@@ -10,6 +10,14 @@ include("../services/PoiService.php");
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = new \Slim\App();
+
+$app->add(function ($req, $res, $next) {
+    $res = $next($req, $res);
+    return $res
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+});
+
 $app->get('/matches/{personality}', function (Request $request, Response $response, $args) {
     $matchingService = new MatchingService();
     $matches = $matchingService->getMatchingUsers($args['personality']);
