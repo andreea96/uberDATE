@@ -10,13 +10,14 @@ use GuzzleHttp\Client;
 class MatchingService
 {
     const MOCKDATALINK = "http://mockbcknd.tk/";
+    const IMAGE_STORAGE_SITE = 'https://randomuser.me/api/portraits/';
 
     /**
      * @param $personality
-     * @param $gender
+     * @param $requestedGender
      * @return array
      */
-    public function getMatchingUsers($personality, $gender)
+    public function getMatchingUsers($personality, $requestedGender)
     {
         $guzzleClient = new Client([
             'base_uri' => self::MOCKDATALINK,
@@ -33,9 +34,10 @@ class MatchingService
         foreach ($users as $username => $user){
             $userPersonality = $user->personalityType;
             $userGender = $user->gender;
-            if($scoresByPersonality->$userPersonality >= 3 && $userGender === $gender)
+            if($scoresByPersonality->$userPersonality >= 2 && $userGender === $requestedGender)
             {
                 $matches[$username] = $user;
+                $matches[$username]->photo = self::IMAGE_STORAGE_SITE . $userGender .'/'.rand(0,99).'.jpg';
                 $matches[$username]->score = $scoresByPersonality->$userPersonality;
             }
         }
@@ -59,7 +61,7 @@ class MatchingService
      */
     private function getRandomGender()
     {
-        $genders = ['m', 'f', 'o'];
+        $genders = ['men', 'women', 'o'];
 
         return $genders[rand(0,2)];
     }
@@ -77,6 +79,7 @@ class MatchingService
             $appUsers[$key]->long = $user->geometry->coordinates[0];
             $appUsers[$key]->personalityType = $this->getRandomPersonalityType();
             $appUsers[$key]->gender = $this->getRandomGender();
+
         }
 
         return $appUsers;
